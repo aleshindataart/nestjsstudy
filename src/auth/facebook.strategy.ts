@@ -1,15 +1,25 @@
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy, Profile } from 'passport-facebook'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
   constructor() {
     super({
-      clientID: '6187923041276646',
-      clientSecret: '73af5d9204a5b3e25964e276d3f4630e',
-      callbackURL: 'http://localhost:4000/facebook/redirect',
-      scope: ['email', 'public_profile', 'user_posts'],
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: process.env.CALLBACK_URL,
+      scope: [
+        'email',
+        'public_profile',
+        'user_posts',
+        'user_photos',
+        'publish_to_groups',
+        'groups_access_member_info'
+      ],
       profileFields: ['emails', 'name']
     })
   }
