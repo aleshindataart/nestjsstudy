@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
-import { FacebookStrategy } from './facebook.strategy'
+import { FacebookStrategy } from './fb.strategy'
 
 // console.log('App_key: ', process.env.APP_KEY)
 // console.log(process.cwd()) // prints current working directory

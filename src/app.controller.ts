@@ -37,47 +37,9 @@ export class AppController {
     return
   }
 
-  @Get('/facebook/permissions')
-  async getPermissions(): Promise<any> {
-    return this.appService.getMyPermissions()
-  }
 
-  @Get('/facebook/myLastPost')
-  async getLastPost(): Promise<any> {
-    return this.appService.getLastPost()
-  }
 
-  @Get('/facebook/getAlbums')
-  async getAlbums(): Promise<any> {
-    return this.appService.getAlbums()
-  }
 
-  @Get('/facebook/userLastPost')
-  async getUserLastPost(): Promise<any> {
-    return this.appService.getUserLastPost()
-  }
-
-  @Get('/facebook/my10LastPosts')
-  async get10LastPosts(): Promise<any> {
-    return this.appService.get10LastPosts()
-  }
-
-  @Get('/facebook/get10GroupPosts')
-  async get10GroupPosts(): Promise<any> {
-    return this.appService.get10GroupPosts()
-  }
-
-  @Get('/facebook/myMetadata')
-  async getMetadata(): Promise<any> {
-    return this.appService.getMyMetadata()
-  }
-
-  @Get('/facebook/getToken')
-  @UseGuards(AuthGuard('facebook'))
-  async getAccessToken(): Promise<any> {
-    this.myAccessToken = await this.appService.getMyPermissions()
-    console.log('=getToken', this.myAccessToken)
-  }
 
   @Get('/facebook')
   @UseGuards(AuthGuard('facebook'))
