@@ -4,93 +4,45 @@ import * as graph from 'fbgraph'
 @Injectable()
 export class FacebookService {
   getAlbums(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      console.log('==> graph access token', graph.getAccessToken())
-      graph.get('/me/albums?', (err, res) => {
-        if (err) {
-          console.error('Error retrieving albums:', err)
-          reject(err)
-          return
-        }
-        const myAlbums = []
-        const myAlbums2 = []
-        res.data.forEach(element => {
-          myAlbums.push(element.name)
-          myAlbums2.push(JSON.stringify(element))
-        })
-        console.log('My Albums:', myAlbums)
-        console.log('My Albums2:', myAlbums2)
-        resolve(`<pre>${myAlbums2.join('\n')}</pre>`)
-      })
-    })
+    return this.returnPromise('/me/albums', 'albums')
   }
 
   getMyPermissions(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      console.log('==> graph access token', graph.getAccessToken())
-      graph.get('/me/permissions', (err, res) => {
-        if (err) {
-          console.error('Error retrieving permissions:', err)
-          reject(err)
-          return
-        }
-        console.log('Permissions:', res.data)
-        resolve(res.data)
-      })
-    })
+    return this.returnPromise('/me/permissions', 'permissions')
   }
 
   getMyMetadata(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      console.log('==> graph access token', graph.getAccessToken())
-      graph.get('/me?metadata=1', (err, res) => {
-        if (err) {
-          console.error('Error retrieving metadata:', err)
-          reject(err)
-          return
-        }
-        console.log('Metadata:', res.metadata)
-        resolve(res.metadata)
-      })
-    })
+    return this.returnPromise('/me?metadata=1', 'metadata', 'metadata')
   }
 
   get10LastPosts(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      console.log('==> graph access token', graph.getAccessToken())
-      graph.get('/me/feed?fields=message,privacy&limit=10', (err, res) => {
-        if (err) {
-          console.error('Error retrieving posts:', err)
-          reject(err)
-          return
-        }
-        const myPosts = []
-        res.data.forEach(element => {
-          if (element.message) {
-            myPosts.push(element.message)
-          }
-        })
-        console.log('My Posts:', myPosts)
-        resolve(`<pre>${myPosts.join('\n')}</pre>`)
-      })
-    })
+    return this.returnPromise(
+      '/me/feed?fields=message,privacy&limit=10',
+      'posts'
+    )
   }
 
   getLastPost(): Promise<any> {
+    return this.returnPromise(
+      '/me/feed?fields=message,privacy&limit=2&privacy={"value":"EVERYONE"}',
+      'last post'
+    )
+  }
+
+  private returnPromise(
+    uri: string,
+    title: string,
+    returnNode = 'data'
+  ): Promise<any> {
     return new Promise((resolve, reject) => {
-      console.log('==> graph access token', graph.getAccessToken())
-      graph.get(
-        '/me/feed?fields=message,privacy&limit=2&privacy={"value":"EVERYONE"}',
-        (err, res) => {
-          if (err) {
-            console.error('Error retrieving posts:', err)
-            reject(err)
-            return
-          }
-          console.log('Posts:', res.data[1].message)
-          resolve(res.data[1].message)
+      graph.get(uri, (err, res) => {
+        if (err) {
+          console.error(`Error retrieving ${title}:`, err)
+          reject(err)
+          return
         }
-      )
+        resolve(res[returnNode])
+      })
     })
   }
 }
