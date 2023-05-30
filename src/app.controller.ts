@@ -36,16 +36,4 @@ export class AppController {
     this.myAccessToken = user.accessToken
     return
   }
-
-  @Get('/facebook')
-  @UseGuards(AuthGuard('facebook'))
-  async facebookLogin(): Promise<any> {
-    console.log('=facebookLogin')
-  }
-
-  @Get('/facebook/success')
-  @UseGuards(AuthGuard('facebook'))
-  async facebookLoginSuccess(@Req() req: Request): Promise<any> {
-    console.log('=facebookLoginSuccess')
-  }
 }

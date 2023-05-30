@@ -35,6 +35,7 @@ export class FacebookService {
     returnNode = 'data'
   ): Promise<any> {
     return new Promise((resolve, reject) => {
+      console.log('==> AccessToken:', graph.getAccessToken())
       graph.get(uri, (err, res) => {
         if (err) {
           console.error(`Error retrieving ${title}:`, err)
