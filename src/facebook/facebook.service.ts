@@ -1,28 +1,29 @@
 import { Injectable } from '@nestjs/common'
 import * as graph from 'fbgraph'
+import FbResolvedObject from '../types/fbgraph.types'
 
 @Injectable()
 export class FacebookService {
-  getAlbums(): Promise<string> {
+  getAlbums(): Promise<FbResolvedObject> {
     return this.returnPromise('/me/albums', 'albums')
   }
 
-  getMyPermissions(): Promise<any> {
+  getMyPermissions(): Promise<FbResolvedObject> {
     return this.returnPromise('/me/permissions', 'permissions')
   }
 
-  getMyMetadata(): Promise<any> {
+  getMyMetadata(): Promise<FbResolvedObject> {
     return this.returnPromise('/me?metadata=1', 'metadata', 'metadata')
   }
 
-  getSeveralLastPosts(countPosts = '10'): Promise<any> {
+  getSeveralLastPosts(countPosts = '10'): Promise<FbResolvedObject> {
     return this.returnPromise(
       `/me/feed?fields=message,privacy&limit=${countPosts}`,
       'posts'
     )
   }
 
-  getLastPost(): Promise<any> {
+  getLastPost(): Promise<FbResolvedObject> {
     return this.returnPromise(
       '/me/feed?fields=message,privacy&limit=2&privacy={"value":"EVERYONE"}',
       'last post'
@@ -33,7 +34,7 @@ export class FacebookService {
     uri: string,
     title: string,
     returnNode = 'data'
-  ): Promise<any> {
+  ): Promise<FbResolvedObject> {
     return new Promise((resolve, reject) => {
       console.log('==> AccessToken:', graph.getAccessToken())
       graph.get(uri, (err, res) => {

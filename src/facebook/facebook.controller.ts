@@ -38,7 +38,6 @@ export class FacebookController {
   @Get('getToken')
   @UseGuards(AuthGuard('facebook'))
   async getAccessToken(): Promise<any> {
-    this.myAccessToken = await this.facebookService.getMyPermissions()
-    console.log('=getToken', this.myAccessToken)
+    await this.facebookService.getMyPermissions()
   }
 }
