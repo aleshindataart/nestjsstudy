@@ -1,6 +1,6 @@
-import { Controller, Get, UseGuards } from '@nestjs/common'
+import { Controller, Get, Param, UseGuards } from '@nestjs/common'
 import { FacebookService } from './facebook.service'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiParam, ApiTags } from '@nestjs/swagger'
 import { AuthGuard } from '@nestjs/passport'
 
 @ApiTags('facebook')
@@ -29,9 +29,10 @@ export class FacebookController {
     return this.facebookService.getLastPost()
   }
 
-  @Get('my10LastPosts')
-  async get10LastPosts(): Promise<any> {
-    return this.facebookService.get10LastPosts()
+  @Get('mySeveralLastPosts/:count')
+  @ApiParam({ name: 'count', description: 'How many posts to request?' })
+  async getSeveralLastPosts(@Param('count') count: string): Promise<any> {
+    return this.facebookService.getSeveralLastPosts(count)
   }
 
   @Get('getToken')

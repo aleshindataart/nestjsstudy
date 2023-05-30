@@ -15,9 +15,9 @@ export class FacebookService {
     return this.returnPromise('/me?metadata=1', 'metadata', 'metadata')
   }
 
-  get10LastPosts(): Promise<any> {
+  getSeveralLastPosts(countPosts = '10'): Promise<any> {
     return this.returnPromise(
-      '/me/feed?fields=message,privacy&limit=10',
+      `/me/feed?fields=message,privacy&limit=${countPosts}`,
       'posts'
     )
   }
