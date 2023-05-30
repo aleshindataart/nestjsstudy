@@ -3,7 +3,7 @@ import { FacebookService } from './facebook.service'
 import { ApiTags } from '@nestjs/swagger'
 import { AuthGuard } from '@nestjs/passport'
 
-@ApiTags('images')
+@ApiTags('facebook')
 @Controller('facebook')
 export class FacebookController {
   constructor(private readonly facebookService: FacebookService) {}
