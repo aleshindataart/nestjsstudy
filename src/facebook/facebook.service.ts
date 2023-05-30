@@ -3,7 +3,7 @@ import * as graph from 'fbgraph'
 
 @Injectable()
 export class FacebookService {
-  async getAlbums(): Promise<string> {
+  getAlbums(): Promise<string> {
     return new Promise((resolve, reject) => {
       console.log('==> graph access token', graph.getAccessToken())
       graph.get('/me/albums?', (err, res) => {
@@ -25,7 +25,7 @@ export class FacebookService {
     })
   }
 
-  async getMyPermissions(): Promise<any> {
+  getMyPermissions(): Promise<any> {
     return new Promise((resolve, reject) => {
       console.log('==> graph access token', graph.getAccessToken())
       graph.get('/me/permissions', (err, res) => {
@@ -40,7 +40,7 @@ export class FacebookService {
     })
   }
 
-  async getMyMetadata(): Promise<any> {
+  getMyMetadata(): Promise<any> {
     return new Promise((resolve, reject) => {
       console.log('==> graph access token', graph.getAccessToken())
       graph.get('/me?metadata=1', (err, res) => {
@@ -55,7 +55,7 @@ export class FacebookService {
     })
   }
 
-  async get10LastPosts(): Promise<any> {
+  get10LastPosts(): Promise<any> {
     return new Promise((resolve, reject) => {
       console.log('==> graph access token', graph.getAccessToken())
       graph.get('/me/feed?fields=message,privacy&limit=10', (err, res) => {
@@ -76,7 +76,7 @@ export class FacebookService {
     })
   }
 
-  async getLastPost(): Promise<any> {
+  getLastPost(): Promise<any> {
     return new Promise((resolve, reject) => {
       console.log('==> graph access token', graph.getAccessToken())
       graph.get(

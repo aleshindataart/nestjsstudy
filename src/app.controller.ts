@@ -37,10 +37,6 @@ export class AppController {
     return
   }
 
-
-
-
-
   @Get('/facebook')
   @UseGuards(AuthGuard('facebook'))
   async facebookLogin(): Promise<any> {
