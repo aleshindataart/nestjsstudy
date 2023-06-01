@@ -1,15 +1,8 @@
-import {
-  Controller,
-  Get,
-  Query,
-  Render,
-  Req,
-  Res,
-  UseGuards
-} from '@nestjs/common'
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
 import { AppService } from './app.service'
 import { AuthGuard } from '@nestjs/passport'
 import * as graph from 'fbgraph'
+import { Request, Response } from 'express'
 
 @Controller()
 export class AppController {
@@ -17,9 +10,13 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render('index.ejs')
   async getIndex(@Req() req: Request, @Res() res: Response): Promise<any> {
-    return this.appService.getIndex(this.myAccessToken)
+    const authUrl = graph.getOauthUrl({
+      client_id: process.env.CLIENT_ID,
+      redirect_uri: process.env.CALLBACK_URL
+    })
+
+    res.redirect(authUrl)
   }
 
   @Get('/facebook/redirect')
@@ -29,9 +26,7 @@ export class AppController {
     @Res() res: Response
   ): Promise<any> {
     const { user } = <any>req
-    console.log('== my accessToken', user.accessToken)
-    console.log('== my user.id', user.id)
-    console.log('== my user.name', user.name)
+    const code = req.query.code
     graph.setAccessToken(user.accessToken)
     this.myAccessToken = user.accessToken
     return
