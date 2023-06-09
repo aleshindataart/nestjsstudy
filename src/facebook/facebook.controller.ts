@@ -7,7 +7,6 @@ import { AuthGuard } from '@nestjs/passport'
 @Controller('facebook')
 export class FacebookController {
   constructor(private readonly facebookService: FacebookService) {}
-  private myAccessToken: string
 
   @Get('/getAlbums')
   async getAlbums(): Promise<any> {

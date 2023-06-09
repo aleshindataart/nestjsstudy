@@ -1,10 +1,10 @@
+import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { join } from 'path'
 import { AppModule } from './app.module'
 import * as dotenv from 'dotenv'
-import * as ejs from 'ejs'
 dotenv.config()
 
 async function bootstrap() {
@@ -21,6 +21,23 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options)
   SwaggerModule.setup('api', app, document)
 
+  document.servers = [
+    {
+      url: '/',
+      variables: {
+        'Content-Type': {
+          default: 'application/json',
+          enum: ['application/json']
+        }
+      }
+    }
+  ]
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true
+    })
+  )
   await app.listen(4000)
   console.log('Application is running on: http://localhost:4000')
 }

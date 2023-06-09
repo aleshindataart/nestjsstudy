@@ -1,10 +1,32 @@
-import { Controller, Get, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, UseGuards, Body } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { FacebookStrategy } from './fb.strategy'
+import { AuthService } from './auth.service'
+import { AuthDto } from './dto'
+import { ApiParam } from '@nestjs/swagger'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly facebookStrategy: FacebookStrategy) {}
+  constructor(
+    private readonly facebookStrategy: FacebookStrategy,
+    private readonly authService: AuthService
+  ) {}
+
+  @Post('signup')
+  @ApiParam({ name: 'email', description: 'Email' })
+  @ApiParam({ name: 'password', description: 'Password' })
+  signup(@Body() dto: AuthDto) {
+    console.log({
+      dto
+    })
+    return this.authService.signup(dto)
+  }
+
+  // noinspection SpellCheckingInspection
+  @Post('signin')
+  signin(@Body() dto: AuthDto) {
+    return this.authService.signin(dto)
+  }
 
   @Get('facebook')
   @UseGuards(AuthGuard('facebook'))

@@ -6,7 +6,6 @@ import { Request, Response } from 'express'
 
 @Controller()
 export class AppController {
-  private myAccessToken: string
   constructor(private readonly appService: AppService) {}
 
   @Get()
@@ -25,10 +24,10 @@ export class AppController {
     @Req() req: Request,
     @Res() res: Response
   ): Promise<any> {
-    const { user } = <any>req
-    const code = req.query.code
-    graph.setAccessToken(user.accessToken)
-    this.myAccessToken = user.accessToken
+    // const { user } = <any>req
+    // const code = req.query.code
+    // graph.setAccessToken(user.accessToken)
+    graph.setAccessToken(process.env.ACCESS_TOKEN)
     return
   }
 }

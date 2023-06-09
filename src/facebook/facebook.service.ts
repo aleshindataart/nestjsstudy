@@ -36,6 +36,7 @@ export class FacebookService {
     returnNode = 'data'
   ): Promise<FbResolvedObject> {
     return new Promise((resolve, reject) => {
+      graph.setAccessToken(process.env.ACCESS_TOKEN)
       console.log('==> AccessToken:', graph.getAccessToken())
       graph.get(uri, (err, res) => {
         if (err) {
