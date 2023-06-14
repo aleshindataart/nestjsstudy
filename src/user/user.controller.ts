@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport'
 import { JwtGuard } from '../auth/guard'
 import { GetUser } from '../auth/decorator'
 import { User } from '@prisma/client'
+import { RolesGuard } from '../roles/roles.guard'
 
 @UseGuards(JwtGuard)
 @Controller('users')
@@ -12,7 +13,7 @@ export class UserController {
     return user
   }
 
-  // @UseGuards(AuthGuard('RolesGuard'))
+  @UseGuards(new RolesGuard())
   @Get('/all')
   GetAll() {
     return 'all users'
