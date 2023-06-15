@@ -22,9 +22,14 @@ export class AuthService {
       const user = await this.prisma.user.create({
         data: {
           email: dto.email,
+          firstName: dto.firstName,
+          lastName: dto.lastName,
+          roles: dto.roles,
           hash
         }
       })
+
+      console.log(user)
 
       return this.signToken(user.id, user.email)
     } catch (e) {

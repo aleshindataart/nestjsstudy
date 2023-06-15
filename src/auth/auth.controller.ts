@@ -15,11 +15,11 @@ export class AuthController {
   @Post('signup')
   @ApiParam({ name: 'email', description: 'Email' })
   @ApiParam({ name: 'password', description: 'Password' })
+  @ApiParam({ name: 'roles', description: 'Roles' })
   signup(@Body() dto: AuthDto) {
     console.log({
-          dto
-        }
-    )
+      dto
+    })
     return this.authService.signup(dto)
   }
 

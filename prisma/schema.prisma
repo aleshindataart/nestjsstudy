@@ -18,4 +18,5 @@ model User {
   hash      String
   firstName String?
   lastName  String?
+  roles     String[]
 }
