@@ -11,7 +11,8 @@ import { AuthService } from './auth/auth.service'
 import { PrismaModule } from './prisma/prisma.module'
 import { ConfigModule } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { RolesController } from './roles/roles.controller';
+import { RolesController } from './roles/roles.controller'
+import { Reflector } from '@nestjs/core'
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { RolesController } from './roles/roles.controller';
     FacebookService,
     FacebookStrategy,
     AuthService,
-    JwtService
+    JwtService,
+    Reflector
   ]
 })
 export class AppModule {}

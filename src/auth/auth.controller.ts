@@ -17,8 +17,9 @@ export class AuthController {
   @ApiParam({ name: 'password', description: 'Password' })
   signup(@Body() dto: AuthDto) {
     console.log({
-      dto
-    })
+          dto
+        }
+    )
     return this.authService.signup(dto)
   }
 
