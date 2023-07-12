@@ -17,14 +17,15 @@ export class MoviesService {
 
   logger = new Logger({
     transports: [
-      new transports.Console() // Output logs to the console
-      // Add other transports as needed (e.g., file transport)
+      new transports.Console(),
+      new transports.File({ filename: 'logs.log' })
     ]
   })
 
   private readonly apiKey = process.env.API_KEY
   private readonly apiUrlPopular = process.env.API_URL_POPULAR
 
+  @Cron(CronExpression.EVERY_5_MINUTES)
   async downloadMovies(): Promise<void> {
     const response = await axios.get(
       `${this.apiUrlPopular}?api_key=${this.apiKey}`
@@ -50,20 +51,21 @@ export class MoviesService {
 
     await this.movieModel.deleteMany({})
     await this.movieModel.insertMany(movieDocuments)
+    this.logger.log('info', 'Movies downloaded successfully')
   }
 
-  @Cron(CronExpression.EVERY_5_MINUTES)
   async getMovies(): Promise<Movie[]> {
     return this.movieModel.find().exec()
   }
 
   async removeMovies(): Promise<void> {
     await this.movieModel.deleteMany({})
+    this.logger.log('info', 'Movies removed successfully')
   }
 
   @Cron('45 * * * * *')
   handleCron() {
     console.log('Called when the current second is 45')
-    // this.logger.debug('Called when the current second is 45')
+    this.logger.log('info', 'Called when the current second is 45')
   }
 }

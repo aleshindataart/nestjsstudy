@@ -14,13 +14,15 @@ import { JwtService } from '@nestjs/jwt'
 import { RolesController } from './roles/roles.controller'
 import { Reflector } from '@nestjs/core'
 import { ConfigEnvService } from './config.service'
-import { GenresModule } from "./genres/genres.module";
-import { MoviesModule } from "./movies/movies.module";
-import { DatabaseModule } from "./database.module";
+import { GenresModule } from './genres/genres.module'
+import { MoviesModule } from './movies/movies.module'
+import { DatabaseModule } from './database.module'
+import { ScheduleModule } from '@nestjs/schedule'
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     FacebookModule,
     AuthModule,
     UserModule,
