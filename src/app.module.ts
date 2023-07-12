@@ -13,6 +13,10 @@ import { ConfigModule } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { RolesController } from './roles/roles.controller'
 import { Reflector } from '@nestjs/core'
+import { ConfigEnvService } from './config.service'
+import { GenresModule } from "./genres/genres.module";
+import { MoviesModule } from "./movies/movies.module";
+import { DatabaseModule } from "./database.module";
 
 @Module({
   imports: [
@@ -20,6 +24,9 @@ import { Reflector } from '@nestjs/core'
     FacebookModule,
     AuthModule,
     UserModule,
+    GenresModule,
+    MoviesModule,
+    DatabaseModule,
     PrismaModule
   ],
   controllers: [AppController, AuthController, RolesController],
@@ -28,6 +35,7 @@ import { Reflector } from '@nestjs/core'
     FacebookService,
     FacebookStrategy,
     AuthService,
+    ConfigEnvService,
     JwtService,
     Reflector
   ]

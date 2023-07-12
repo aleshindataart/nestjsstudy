@@ -5,6 +5,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { join } from 'path'
 import { AppModule } from './app.module'
 import * as dotenv from 'dotenv'
+
 dotenv.config()
 
 async function bootstrap() {
@@ -17,6 +18,7 @@ async function bootstrap() {
     .setDescription('My FB API endpoints test')
     .setVersion('0.1')
     .addTag('facebook')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }) // Add JWT bearer authentication
     .build()
   const document = SwaggerModule.createDocument(app, options)
   SwaggerModule.setup('api', app, document)
@@ -41,4 +43,5 @@ async function bootstrap() {
   await app.listen(4000)
   console.log('Application is running on: http://localhost:4000')
 }
+
 bootstrap()
